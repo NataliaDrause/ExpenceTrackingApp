@@ -70,7 +70,3 @@ foreach($data as $item) {
 }
 
 $net_total = $total_income + $total_expense;
-
-echo "Total Income = " . $total_income . "<br/>";
-echo "Total Expence = " . $total_expense . "<br/>";
-echo "Net Total = " . $net_total . "<br/>";
