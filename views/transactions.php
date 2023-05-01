@@ -33,24 +33,14 @@
         </tr>
     </thead>
     <tbody>
+      <?php foreach($data as $item): ?>
         <tr>
-            <td><?= $data[0]['Date'] ?></td>
-            <td><?= $data[0]['Check #'] ?></td>
-            <td><?= $data[0]['Description'] ?></td>
-            <td><?= $data[0]['Amount'] ?></td>
+            <td><?= $item['Date'] ?></td>
+            <td><?= $item['Check #'] ?></td>
+            <td><?= $item['Description'] ?></td>
+            <td><?= $item['Amount'] ?></td>
         </tr>
-        <tr>
-            <td><?= $data[1]['Date'] ?></td>
-            <td><?= $data[1]['Check #'] ?></td>
-            <td><?= $data[1]['Description'] ?></td>
-            <td><?= $data[1]['Amount'] ?></td>
-        </tr>
-        <tr>
-            <td><?= $data[2]['Date'] ?></td>
-            <td><?= $data[2]['Check #'] ?></td>
-            <td><?= $data[2]['Description'] ?></td>
-            <td><?= $data[2]['Amount'] ?></td>
-        </tr>
+      <?php endforeach; ?>
     </tbody>
     <tfoot>
         <tr>
