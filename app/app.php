@@ -35,8 +35,9 @@ function getDataFromFile($file_path) {
   // 2.4 Trim the items of the header_arr.
   $header_arr = array_map(fn($item) => trim($item), $header_arr);
 
-  // 2.5. Convert data to associative array
+  // 2.5. Convert data to associative array and trim quotes.
   foreach($arr_data as $entry) {
+    $entry = array_map(fn($item) => trim($item, " \n\r\t\v\x00\""), $entry);
     $file_data_array[] = array_combine($header_arr, $entry);
   }
 
@@ -59,3 +60,17 @@ foreach($files_arr as $file) {
 /*
 * 4. Calculate total income, total expense & net total.
 */
+
+$total_income = 0;
+$total_expense = 0;
+
+foreach($data as $item) {
+  $val = (float) str_replace('$', '', $item['Amount']);
+  $val > 0 ? $total_income += $val : $total_expense += $val;
+}
+
+$net_total = $total_income + $total_expense;
+
+echo "Total Income = " . $total_income . "<br/>";
+echo "Total Expence = " . $total_expense . "<br/>";
+echo "Net Total = " . $net_total . "<br/>";
