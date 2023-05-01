@@ -1,7 +1,13 @@
 <?php
-// 1. Extract all items in directory.
+
+/*
+* 1. Process files in the directory.
+*/
+
+// 1.1 Extract all items in directory to an array.
 $files_dir = scandir(FILES_PATH);
-// 2. Create a custom array of only files to process.
+
+// 1.2 Create a custom array of only files to process.
 $files_arr = [];
 foreach($files_dir as $item) {
   if(is_file(FILES_PATH . $item)) {
@@ -9,26 +15,47 @@ foreach($files_dir as $item) {
   }
 }
 
-// 3. Open file for reading
-$file = fopen($files_arr[0], 'r');
+/*
+* 2. Create a function that opens files and extracts information.
+*/
 
-// 4. Put each line into an array.
-$arr_data =[];
-while (($line = fgets($file)) !== false) {
-    $arr_data[] = explode(',', $line, 4);
+function getDataFromFile($file_path) {
+
+  // 2.1 Open file for reading.
+  $file = fopen($file_path, 'r');
+
+  // 2.2. Put each line of the file into an array.
+  while (($line = fgets($file)) !== false) {
+      $arr_data[] = explode(',', $line, 4);
+  }
+
+  // 2.3 Remove the header of the table (first sub-array) into separate array.
+  $header_arr = array_shift($arr_data);
+
+  // 2.4 Trim the items of the header_arr.
+  $header_arr = array_map(fn($item) => trim($item), $header_arr);
+
+  // 2.5. Convert data to associative array
+  foreach($arr_data as $entry) {
+    $file_data_array[] = array_combine($header_arr, $entry);
+  }
+
+  // 2.6 Close file
+  fclose($file);
+
+  // 2.7 return the data of the file in an array
+  return $file_data_array;
 }
 
-// 4.1 Remove the header of the table (first array) into separate array.
-$header_arr = array_shift($arr_data);
-//$header_arr = array_map(trim($item)); // FIX THIS LINE
+/*
+* 3. Extract all the files data into one array.
+*/
 
-// 5. Convert data to associative array
-$final_array = [];
-foreach($arr_data as $entry) {
-  $a_arr = array_combine($header_arr, $entry);
-  $final_array[] = $a_arr;
+$data = [];
+foreach($files_arr as $file) {
+  $data = array_merge($data, getDataFromFile($file));
 }
-print_r($final_array);
 
-// 4. Close file
-fclose($file);
+/*
+* 4. Calculate total income, total expense & net total.
+*/
