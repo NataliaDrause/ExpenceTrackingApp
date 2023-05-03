@@ -21,6 +21,11 @@ foreach($files_dir as $item) {
 
 function getDataFromFile($file_path) {
 
+  //2.0 Trigger error if file does not exist.
+  if (! file_exists($file_path)) {
+    trigger_error('File "' . $file_path . '" does not exist.', E_USER_ERROR);
+  }
+
   // 2.1 Open file for reading.
   $file = fopen($file_path, 'r');
 
@@ -41,7 +46,7 @@ function getDataFromFile($file_path) {
     $entry[0] = date('M j, o', strtotime($entry[0]));
     $file_data_array[] = array_combine($header_arr, $entry);
   }
-  
+
   // 2.6 Close file
   fclose($file);
 
