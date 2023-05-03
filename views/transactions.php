@@ -45,15 +45,15 @@
     <tfoot>
         <tr>
             <th colspan="3">Total Income:</th>
-            <td><?=$total_income ?></td>
+            <td><?= "$" . $total_income ?></td>
         </tr>
         <tr>
             <th colspan="3">Total Expense:</th>
-            <td><?=$total_expense ?></td>
+            <td><?= "-$" . -$total_expense; ?></td>
         </tr>
         <tr>
             <th colspan="3">Net Total:</th>
-            <td><?=$net_total ?></td>
+            <td><?= "$" . $net_total ?></td>
         </tr>
     </tfoot>
 </table>

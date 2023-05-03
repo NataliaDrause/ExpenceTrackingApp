@@ -38,9 +38,10 @@ function getDataFromFile($file_path) {
   // 2.5. Convert data to associative array and trim quotes.
   foreach($arr_data as $entry) {
     $entry = array_map(fn($item) => trim($item, " \n\r\t\v\x00\""), $entry);
+    $entry[0] = date('M j, o', strtotime($entry[0]));
     $file_data_array[] = array_combine($header_arr, $entry);
   }
-
+  
   // 2.6 Close file
   fclose($file);
 
