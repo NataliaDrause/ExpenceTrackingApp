@@ -38,7 +38,7 @@
             <td><?= $item['Date'] ?></td>
             <td><?= $item['Check #'] ?></td>
             <td><?= $item['Description'] ?></td>
-            <td><?= $item['Amount'] ?></td>
+            <td style="color:<?php if((float) str_replace('$', '', $item['Amount']) > 0){echo "green";} else { echo "red";}; ?>;"><?= $item['Amount']  ?></td>
         </tr>
       <?php endforeach; ?>
     </tbody>
